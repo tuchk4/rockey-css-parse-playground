@@ -97,7 +97,7 @@ class App extends Component {
           <TopMenu />
         </Box>
         <Box className="flex flex-grow responsive-row">
-          <Box className="flex column flex-grow">
+          <Box className="flex column flex-grow flex-50">
             <Box className="configuration-block">
               <ClassNameConfigurator value="a-${name}" onChange={this.handleConfigChange} />
             </Box>
@@ -108,7 +108,7 @@ class App extends Component {
               <ErrorBox error={this.state.error} />
             </Box>
           </Box>
-          <Box className="flex flex-grow">
+          <Box className="flex flex-grow flex-50">
             <Tabs precss={this.state.precss} css={this.state.beauty} />
           </Box>
         </Box>
