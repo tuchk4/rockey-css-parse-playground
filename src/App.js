@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import createParser from 'rockey-css-parse';
-import stringify from 'rockey-css-parse/stringify';
+import createParser from './rockey-css-parse';
+import stringify from './rockey-css-parse/stringify';
 import Box from 'react-layout-components'
 
 import cssbeautify from 'cssbeautify';
@@ -92,25 +92,23 @@ class App extends Component {
   render() {
     const { beauty, error } = this.state;
     return (
-      <Box fit column>
+      <Box className="flex column" fit>
         <Box className="top-menu">
           <TopMenu />
         </Box>
-        <Box className="configuration-block">
-          <ClassNameConfigurator value="a-${name}" onChange={this.handleConfigChange} />
-        </Box>
-        <Box flex fit row>
-          <Box flex fit column>
-            <Box flex fit column>
-              <CodeMirror
-                value={this.state.code}
-                onChange={this.handleOnChange}/>
-              </Box>
-              <Box>
-                <ErrorBox error={this.state.error} />
-              </Box>
+        <Box className="flex flex-grow responsive-row">
+          <Box className="flex column flex-grow flex-50">
+            <Box className="configuration-block">
+              <ClassNameConfigurator value="a-${name}" onChange={this.handleConfigChange} />
+            </Box>
+            <Box className="flex flex-grow">
+              <CodeMirror value={this.state.code} onChange={this.handleOnChange}/>
+            </Box>
+            <Box>
+              <ErrorBox error={this.state.error} />
+            </Box>
           </Box>
-          <Box flex fit>
+          <Box className="flex flex-grow flex-50">
             <Tabs precss={this.state.precss} css={this.state.beauty} />
           </Box>
         </Box>
