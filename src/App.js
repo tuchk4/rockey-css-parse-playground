@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import createParser from 'rockey-css-parse';
-import stringify from 'rockey-css-parse/stringify';
+import createParser from './rockey-css-parse';
+import stringify from './rockey-css-parse/stringify';
 import Box from 'react-layout-components'
 
 import cssbeautify from 'cssbeautify';
-import vendorPrefix from 'rockey/plugins/vendorPrefix';
-import validateCSSRule from 'rockey/plugins/validateCSSRule';
+// import vendorPrefix from 'rockey/plugins/vendorPrefix';
+// import validateCSSRule from 'rockey/plugins/validateCSSRule';
 
 import Tabs from './components/Tabs';
 import PropsEditor from './components/PropsEditor';
@@ -137,8 +137,7 @@ class App extends Component {
       css,
       syntaxError,
       props,
-      warnings: this.warnings,
-      precss: syntaxError ? null : preapre(parsed.precss),
+      warnings: this.warnings, precss: syntaxError ? null : preapre(parsed.precss),
       beauty: syntaxError ? null : cssbeautify(css)
     });
   }
@@ -156,12 +155,12 @@ class App extends Component {
       parse = createParser({
         getClassName: state.getClassName,
         plugins: [
-          vendorPrefix(message => {
-            this.updateWarnigns('vendorPrefix', message);
-          }),
-          validateCSSRule(message => {
-            this.updateWarnigns('validateCSSRule', message);
-          })
+          // vendorPrefix(message => {
+          //   this.updateWarnigns('vendorPrefix', message);
+          // }),
+          // validateCSSRule(message => {
+          //   this.updateWarnigns('validateCSSRule', message);
+          // })
         ]
       });
     } catch(e) {
