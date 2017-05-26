@@ -55,30 +55,30 @@ const PropsEditor = ({ props, onChange }) => {
 
   return (
     <Box className="props-editor">
-      <h5>props:</h5>
-      {
-        props.map((prop, index) => {
-          return (
-            <Box row key={index}>
-                <Box>
-                  <input type="text" value={prop.key} onChange={e => {
+      <Box className="box props-editor__body">
+        <h5>Props:</h5>
+        {
+          props.map((prop, index) => {
+            return (
+              <Box row className="props-editor__body-item" key={index}>
+                <Box className="props-editor-controls">
+                  <input type="text" className="props-editor-controls-item" value={prop.key} placeholder="property" onChange={e => {
                     handleChange(prop.key, e.target.value, prop.value);
                   }}/>
-                </Box>
-                <Box>
-                  <input type="text" value={prop.value} onChange={e => {
+                  <span className="props-editor-controls-divider">:</span>
+                  <input type="text" className="props-editor-controls-item" value={prop.value} placeholder="value" onChange={e => {
                     handleChange(prop.key, prop.key, e.target.value);
                   }}/>
+                  <span className="props-editor-controls-divider">;</span>
+                  <button className="button" onClick={e => handleRemove(prop.key)}>Remove</button>
                 </Box>
-                <Box>
-                  <button onClick={e => handleRemove(prop.key)}>x</button>
-                </Box>
-            </Box>
-          )
-        })
-      }
-      <Box>
-        <button onClick={handleAdd}>Add property</button>
+              </Box>
+            )
+          })
+        }
+        <Box className="props-editor__actions">
+          <button className="button btn-primary" onClick={handleAdd}>Add property</button>
+        </Box>
       </Box>
     </Box>
   );
