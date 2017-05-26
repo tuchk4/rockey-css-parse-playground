@@ -24,7 +24,7 @@ const theme = {
 
 const Tree = ({ data }) => {
   return (
-    <JSONTree data={data}
+    <JSONTree data={data || {}}
       getItemString={(type, data, itemType, itemString) => (<span> // {type}</span>)}
       theme={theme}/>
   );

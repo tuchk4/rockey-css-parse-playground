@@ -18,9 +18,16 @@ a:hover{
   text-decoration: none;
 }
 
+input[type="text"].classname-error {
+  color: #cc0000;
+  border-bottom: 1px solid #cc0000;
+}
+
 input[type="text"]{
   background-color: transparent;
   border: 0;
+  font-size: 1.2em;
+  color: #474747;
   border-bottom: 1px solid rgba(0,0,0,0.12);
   padding: 2px 2px 1px;
   line-height: 26px;
@@ -90,8 +97,47 @@ input[type="text"]:focus{
   font-weight: bold;
 }
 
+.error-box.warning-mode {
+  background: #F2F2C5;
+}
+
 .configuration-block {
   padding: 1rem;
+}
+
+.class-name-configurator {
+
+}
+
+.keyword {
+  display: inline-block;;
+  margin: 0 10px 0 0;
+  color: #7f7fff;
+}
+
+.func-name {
+  display: inline-block;;
+  margin: 0 10px 0 0;
+  color: #a12b2d;
+  font-weight: bold;
+}
+
+.symbol {
+  display: inline-block;;
+  margin: 0 10px 0 0;
+  color: #000;
+}
+
+.arguments {
+  display: inline-block;;
+  margin: 0 10px 0 0;
+  color: #7f7fff;
+}
+
+.arrow {
+  display: inline-block;;
+  margin: 0 10px 0 0;
+  color: #000;
 }
 
 
@@ -126,7 +172,7 @@ input[type="text"]:focus{
 
 }
 
-.responsive-row{
+.responsive-row {
   padding: 0 .5rem;
 }
 
@@ -177,4 +223,15 @@ input[type="text"]:focus{
   .flex-50{
     max-width: none;
   }
+}
+
+.props-editor h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.props-editor {
+  padding: 15px;
+  margin: 5px 0 5px;
+  background: #fff;
 }
