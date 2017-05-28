@@ -1,5 +1,5 @@
 import React from 'react';
-import JSONTree from 'react-json-tree'
+import JSONTree from 'react-json-tree';
 
 const theme = {
   scheme: 'google',
@@ -19,15 +19,19 @@ const theme = {
   base0C: '#3971ED',
   base0D: '#3971ED',
   base0E: '#A36AC7',
-  base0F: '#3971ED'
+  base0F: '#3971ED',
 };
 
 const Tree = ({ data }) => {
   return (
-    <JSONTree data={data || {}}
-      getItemString={(type, data, itemType, itemString) => (<span> // {type}</span>)}
-      theme={theme}/>
+    <JSONTree
+      data={data || {}}
+      getItemString={(type, data, itemType, itemString) => (
+        <span> // {type}</span>
+      )}
+      theme={theme}
+    />
   );
-}
+};
 
 export default Tree;

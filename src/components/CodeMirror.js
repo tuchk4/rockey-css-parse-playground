@@ -15,8 +15,9 @@ const Code = ({ onChange, value }) => {
         mode: 'css',
         lineNumbers: true,
       }}
-      onChange={onChange}/>
+      onChange={onChange}
+    />
   );
-}
+};
 
 export default Code;

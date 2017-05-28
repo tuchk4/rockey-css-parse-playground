@@ -13,7 +13,12 @@ const ClassNameConfigurator = ({ value, onChange, error }) => {
         <span className="arrow">⇒</span>
       </span>
       <span className="arrow">`</span>
-      <input type="text" value={value} onChange={onChange} className={inputClassList}/>
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        className={inputClassList}
+      />
       <span className="arrow">`</span>
     </div>
   );
