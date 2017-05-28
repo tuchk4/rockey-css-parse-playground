@@ -69,7 +69,6 @@ const PropsEditor = ({ props, onChange }) => {
                   <input type="text" className="props-editor-controls-item" value={prop.value} placeholder="value" onChange={e => {
                     handleChange(prop.key, prop.key, e.target.value);
                   }}/>
-                  <span className="props-editor-controls-divider">;</span>
                   <button className="button" onClick={e => handleRemove(prop.key)}>Remove</button>
                 </Box>
               </Box>

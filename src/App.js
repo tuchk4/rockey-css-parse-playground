@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import createParser from './rockey-css-parse';
-import stringify from './rockey-css-parse/stringify';
+import createParser from 'rockey-css-parse';
+import stringify from 'rockey-css-parse/stringify';
 import Box from 'react-layout-components'
 
 import cssbeautify from 'cssbeautify';
-// import vendorPrefix from 'rockey/plugins/vendorPrefix';
-// import validateCSSRule from 'rockey/plugins/validateCSSRule';
+import vendorPrefix from 'rockey/plugins/vendorPrefix';
+import validateCSSRule from 'rockey/plugins/validateCSSRule';
 
 import Tabs from './components/Tabs';
 import PropsEditor from './components/PropsEditor';
@@ -26,7 +26,6 @@ const preapre = precess =>  precess.map(p => {
   if (p.frames) {
     processed.frames = preapre(p.frames);
   }
-  // processed.root = p.root;
 
   if (p.mixins && p.mixins.length) {
     processed.mixins = `"${p.mixins.length}" mixin functions`;
@@ -41,17 +40,18 @@ const preapre = precess =>  precess.map(p => {
 
 const DEFAULT_PROPS = [{
   key: 'color',
-  value: 'red'
+  value: 'purple'
 }];
 
-const DEFAULT_STYLES = `Button {
-  color: red;
+const DEFAULT_CODE = `Button {
+  color: \${props => props.color};
+  border: 1px solid #000;
 
   :hover {
     color: green;
 
     Icon {
-      color: black;
+      margin: 5px;
     }
   }
 }
@@ -65,21 +65,20 @@ Layer {
 }
 `;
 
+const DEFAULT_CLASSNAME_FUNCTION = '__${name}__hash__';
+
 let parse = null;
 
 class App extends Component {
 
   state = {
     code: null,
-    classNameFunction: 'c-${name}',
+    classNameFunction: '',
     classNameFunctionError: null,
     css: '',
     beauty: '',
     precss: null,
-    props: [{
-      key: 'color',
-      value: 'green'
-    }]
+    props: []
   }
 
   warnings = {
@@ -87,16 +86,33 @@ class App extends Component {
     validateCSSRule: [],
   };
 
-  componentWillMount() {
-    const code = localStorage.getItem('code');
-    const classNameFunction = localStorage.getItem('classNameFunction');
-    const props = JSON.parse(localStorage.getItem('props'));
+  constructor(props) {
+    super(props);
+    const state = this.init();
 
-    if (classNameFunction) {
-      this.updateClassNameFunction(classNameFunction);
+    this.state =  {
+      ...this.state,
+      ...state,
     }
+  }
 
-    this.updateResult(code || DEFAULT_STYLES, props || DEFAULT_PROPS);
+  componentWillMount() {
+    const state = this.init();
+    this.setState(state);
+  }
+
+  init() {
+    const code = localStorage.getItem('code') || DEFAULT_CODE;
+    const classNameFunction = localStorage.getItem('classNameFunction') || DEFAULT_CLASSNAME_FUNCTION;
+    const props = JSON.parse(localStorage.getItem('props')) || DEFAULT_PROPS;
+
+    return {
+      ...this.updateClassNameFunction(classNameFunction),
+      ...this.updateResult({
+        code,
+        props
+      })
+    };
   }
 
   updateWarnigns(type, warning) {
@@ -105,7 +121,10 @@ class App extends Component {
     });
   }
 
-  updateResult(code, props = this.state.props) {
+  updateResult({
+    code,
+    props = this.state.props
+  }) {
     let parsed = null;
     let css = null;
     let syntaxError = null;
@@ -116,7 +135,6 @@ class App extends Component {
     };
 
     try {
-      // parsed = parse(code);
       parsed = eval('parse`' + code + '`');
 
       const cssProps = props.reduce((props, prop) => {
@@ -132,14 +150,14 @@ class App extends Component {
     localStorage.setItem('code', code);
     localStorage.setItem('props', JSON.stringify(props));
 
-    this.setState({
+    return {
       code,
       css,
       syntaxError,
       props,
       warnings: this.warnings, precss: syntaxError ? null : preapre(parsed.precss),
       beauty: syntaxError ? null : cssbeautify(css)
-    });
+    };
   }
 
   updateClassNameFunction(classNameFunction) {
@@ -154,13 +172,14 @@ class App extends Component {
       state.getClassName('zxc');
       parse = createParser({
         getClassName: state.getClassName,
+        getMixinClassName: m => `__mixin__${m}`,
         plugins: [
-          // vendorPrefix(message => {
-          //   this.updateWarnigns('vendorPrefix', message);
-          // }),
-          // validateCSSRule(message => {
-          //   this.updateWarnigns('validateCSSRule', message);
-          // })
+          vendorPrefix(message => {
+            this.updateWarnigns('vendorPrefix', message);
+          }),
+          validateCSSRule(message => {
+            this.updateWarnigns('validateCSSRule', message);
+          })
         ]
       });
     } catch(e) {
@@ -168,20 +187,34 @@ class App extends Component {
     }
 
     localStorage.setItem('classNameFunction', classNameFunction);
-    this.setState(state);
+
+    return state;
   }
 
   handleConfigChange = (e) => {
-    this.updateClassNameFunction(e.target.value);
-    this.updateResult(this.state.code);
+    this.setState({
+      ...this.updateClassNameFunction(e.target.value),
+      ...this.updateResult({
+        code: this.state.code
+      })
+    });
   }
 
   handleOnChange = code => {
-    this.updateResult(code);
+    const state = this.updateResult({
+      code
+    });
+
+    this.setState(state);
   }
 
   handleOnPropsChange = props => {
-    this.updateResult(this.state.code, props);
+    const state = this.updateResult({
+      code: this.state.code,
+      props
+    });
+
+    this.setState(state);
   }
 
   render() {
