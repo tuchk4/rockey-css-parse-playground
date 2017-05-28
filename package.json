@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "rockey": "=0.0.14-alpha.fa05b467",
+    "rockey-css-parse": "=0.0.14-alpha.fa05b467",
     "classnames": "^2.2.5",
     "cssbeautify": "^0.3.1",
     "highlight.js": "^9.11.0",
