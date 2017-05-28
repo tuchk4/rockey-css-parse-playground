@@ -18,8 +18,8 @@
     "react-json-tree": "^0.10.9",
     "react-layout-components": "^3.0.4",
     "react-tabs": "^1.0.0",
-    "rockey": "=0.0.14-alpha.fa05b467",
-    "rockey-css-parse": "=0.0.14-alpha.fa05b467"
+    "rockey": "0.0.15-1",
+    "rockey-css-parse": "0.0.15-1"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
